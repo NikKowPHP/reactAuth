@@ -8,7 +8,7 @@ export function Login() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 	const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
-	const { signup, currentUser } = useAuth();
+	const { login } = useAuth();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -25,10 +25,10 @@ export function Login() {
 		try {
 			setError("");
 			setLoading(true);
-			await signup(emailRef.current?.value, passwordRef.current?.value);
+			await login(emailRef.current?.value, passwordRef.current?.value);
 		} catch (e) {
 			console.error(e);
-			setError("Failed to create an account");
+			setError(e.message);
 		}
 		setLoading(false);
 	}
@@ -47,10 +47,6 @@ export function Login() {
 						<Form.Group id="password">
 							<Form.Label>Password</Form.Label>
 							<Form.Control type="password" ref={passwordRef} required />
-						</Form.Group>
-						<Form.Group id="password-confirm">
-							<Form.Label>Password Confirmation</Form.Label>
-							<Form.Control type="password" ref={passwordConfirmRef} required />
 						</Form.Group>
 						<Button className="w-100" type="submit" disabled={loading}>
 							Sign Up
