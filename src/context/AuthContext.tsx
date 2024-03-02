@@ -7,10 +7,11 @@ import React, {
 } from "react";
 import { auth } from "../firebase";
 import { User } from "../types/user";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 type AuthContextType = {
 	currentUser: User | null;
-	signup: (email: string, password: string) => Promise<any>;
+	signup: (email: string|undefined, password: string|undefined) => Promise<any>;
 };
 type AuthProviderProps = {
 	children: ReactNode;
@@ -26,7 +27,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 
 	function signup(email: string, password: string) {
-		return auth.createUserWithEmailAndPassword(email, password);
+    // return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth,email, password);
 	}
 
 	useEffect(() => {
