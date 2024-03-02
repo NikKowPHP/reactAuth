@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export function Signup() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
@@ -36,7 +37,6 @@ export function Signup() {
 			<Card>
 				<Card.Body>
 					<h2 className="text-center mb-4">Sign up</h2>
-					{currentUser.email}
 					{error && <Alert variant="danger">{error}</Alert>}
 					<Form onSubmit={handleSubmit}>
 						<Form.Group id="email">
@@ -59,7 +59,7 @@ export function Signup() {
 				<div className="w-100 text-center mt-2"></div>
 			</Card>
 			<div className="w-100 text-center mt-2">
-				Already have an account? Log In
+				Already have an account?<Link to="/login">Log In</Link> 
 			</div>
 		</>
 	);

@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import { Signup } from "./Signup";
 
 export function Login() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
@@ -58,7 +60,7 @@ export function Login() {
 				<div className="w-100 text-center mt-2"></div>
 			</Card>
 			<div className="w-100 text-center mt-2">
-				Already have an account? Log In
+        Need an account? <Link to='/signup' >Sign Up</Link>
 			</div>
 		</>
 	);
