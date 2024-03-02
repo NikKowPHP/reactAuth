@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import { Signup } from "./Signup";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Login() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
@@ -11,6 +10,7 @@ export function Login() {
 	const { login } = useAuth();
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -26,6 +26,7 @@ export function Login() {
 			setError("");
 			setLoading(true);
 			await login(emailRef.current?.value, passwordRef.current?.value);
+			navigate("/profile");
 		} catch (e) {
 			console.error(e);
 			setError(e.message);
@@ -56,7 +57,7 @@ export function Login() {
 				<div className="w-100 text-center mt-2"></div>
 			</Card>
 			<div className="w-100 text-center mt-2">
-        Need an account? <Link to='/signup' >Sign Up</Link>
+				Need an account? <Link to="/signup">Sign Up</Link>
 			</div>
 		</>
 	);
