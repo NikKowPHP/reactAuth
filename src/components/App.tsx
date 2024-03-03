@@ -5,6 +5,8 @@ import { Login } from "./Login";
 import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Profile } from "../pages/Profile";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware";
+import { PrivateRoute } from "./PrivateRoute";
 
 function App() {
 	return (
@@ -16,11 +18,16 @@ function App() {
 				<Router>
 					<AuthProvider>
 						<Routes>
-							<Route path="/signup" element={<Signup/>}/>
-							<Route path="/login" element={<Login/>}/>
-							<Route path="/profile" element={<Profile/>}/>
-							<Route path="/" element={<Profile/>}/>
-							<Route></Route>
+							<Route path="/signup" element={<Signup />} />
+							<Route path="/login" element={<Login />} />
+							<Route
+								path="/"
+								element={
+									<AuthMiddleware>
+										<Profile />
+									</AuthMiddleware>
+								}
+							/>
 						</Routes>
 					</AuthProvider>
 				</Router>
