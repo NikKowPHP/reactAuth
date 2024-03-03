@@ -20,7 +20,9 @@ type AuthContextType = {
 	signup: (email: string, password: string) => Promise<any>;
 	login: (email: string, password: string) => Promise<any>;
 	logout: () => Promise<any>;
+	isLoggedIn: boolean;
 };
+
 type AuthProviderProps = {
 	children: ReactNode;
 };
@@ -34,6 +36,7 @@ export function useAuth() {
 export function AuthProvider({ children }: AuthProviderProps) {
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
 
 	function signup(email: string, password: string) {
 		return createUserWithEmailAndPassword(auth, email, password);
@@ -45,10 +48,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		return signOut(auth);
 	}
 
+
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user: FirebaseUser | null)  => {
 			
-			setCurrentUser(user);
+				setCurrentUser(user);
+				user ? setIsLoggedIn(true) : setIsLoggedIn(false)
 
 			setLoading(false);
 		});
@@ -60,6 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		signup,
 		login,
 		logout,
+		isLoggedIn,
 	};
 
 	return (
