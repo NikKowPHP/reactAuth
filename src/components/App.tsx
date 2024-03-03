@@ -28,6 +28,14 @@ function App() {
 									</AuthMiddleware>
 								}
 							/>
+							<Route
+								path="/profile"
+								element={
+									<AuthMiddleware>
+										<Profile />
+									</AuthMiddleware>
+								}
+							/>
 						</Routes>
 					</AuthProvider>
 				</Router>
