@@ -13,6 +13,8 @@ import {
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signOut,
+	updateEmail,
+	updatePassword
 } from "firebase/auth";
 import { User as FirebaseUser } from "firebase/auth"; 
 
@@ -22,6 +24,8 @@ type AuthContextType = {
 	login: (email: string, password: string) => Promise<any>;
 	resetPassword: (email: string) => Promise<any>;
 	logout: () => Promise<any>;
+	updateEmailForCurrentUser: (email: string) => Promise<any>;
+	updatePasswordForCurrentUser: (password: string) => Promise<any>;
 	isLoggedIn: boolean;
 };
 
@@ -36,7 +40,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-	const [currentUser, setCurrentUser] = useState<User | null>(null);
+	const [currentUser, setCurrentUser] = useState<FirebaseUser|null>(null);
 	const [loading, setLoading] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
 
@@ -51,6 +55,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	}
 	function resetPassword(email: string) {
 		return sendPasswordResetEmail(auth, email)
+	}
+	function updateEmailForCurrentUser(email) {
+		return updateEmail(currentUser, email)
+	}
+	function updatePasswordForCurrentUser(password) {
+		return updatePassword(currentUser, password)
 	}
 
 
@@ -71,6 +81,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		login,
 		logout,
 		resetPassword,
+		updateEmailForCurrentUser,
+		updatePasswordForCurrentUser,
 		isLoggedIn,
 	};
 
