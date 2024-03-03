@@ -6,7 +6,9 @@ import { AuthProvider } from "../context/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Profile } from "../pages/Profile";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
-import { PrivateRoute } from "./PrivateRoute";
+
+import { Forgot } from "./Forgot"
+import { UpdateProfile } from "../pages/UpdateProfile";
 
 function App() {
 	return (
@@ -20,6 +22,7 @@ function App() {
 						<Routes>
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/login" element={<Login />} />
+							<Route path="/forgot-password" element={<Forgot/>} />
 							<Route
 								path="/"
 								element={
@@ -33,6 +36,14 @@ function App() {
 								element={
 									<AuthMiddleware>
 										<Profile />
+									</AuthMiddleware>
+								}
+							/>
+							<Route
+								path="/update-profile"
+								element={
+									<AuthMiddleware>
+										<UpdateProfile/>
 									</AuthMiddleware>
 								}
 							/>
