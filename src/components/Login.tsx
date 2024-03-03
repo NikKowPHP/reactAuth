@@ -53,6 +53,9 @@ export function Login() {
 							Sign Up
 						</Button>
 					</Form>
+					<div className="w-100 text-center mt-3">
+						<Link to="/forgot-password">Forgot password?</Link>
+					</div>
 				</Card.Body>
 				<div className="w-100 text-center mt-2"></div>
 			</Card>
