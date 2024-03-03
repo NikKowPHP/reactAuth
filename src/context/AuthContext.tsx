@@ -10,6 +10,7 @@ import { User } from "../types/user";
 import {
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
+	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signOut,
 } from "firebase/auth";
@@ -19,6 +20,7 @@ type AuthContextType = {
 	currentUser: User | null;
 	signup: (email: string, password: string) => Promise<any>;
 	login: (email: string, password: string) => Promise<any>;
+	resetPassword: (email: string) => Promise<any>;
 	logout: () => Promise<any>;
 	isLoggedIn: boolean;
 };
@@ -47,6 +49,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	function logout() {
 		return signOut(auth);
 	}
+	function resetPassword(email: string) {
+		return sendPasswordResetEmail(auth, email)
+	}
 
 
 	useEffect(() => {
@@ -65,6 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 		signup,
 		login,
 		logout,
+		resetPassword,
 		isLoggedIn,
 	};
 
