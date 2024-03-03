@@ -1,13 +1,22 @@
 import { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Profile() {
+  const navigate = useNavigate();
 	const [error, setError] = useState("");
   const {currentUser, logout } = useAuth();
-  function handleLogout() {
-
+  async function handleLogout() {
+    setError('')
+    try {
+      await logout();
+      navigate("/login")
+      
+    } catch(e) {
+      setError(e.message)
+      console.error(e)
+    }
   }
   return (
     <>
